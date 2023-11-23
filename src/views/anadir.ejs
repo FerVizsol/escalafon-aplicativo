@@ -1,0 +1,82 @@
+<%- include('partials/_header') %>
+    <div class="container card mt-5">
+        <div class="row form-group mt-3">
+            <h3>Informacion Basica</h3>
+            <div class="col-md-6">
+                <label for="numdoc" class="col-sm-6 col-form-label">Numero de Documento</label> <br>
+                <input type="text" class="form-control" placeholder="Ejemplo: 72707075">
+                <label class="col-sm-6 col-form-label">Nombres del docente</label> <br>
+                <input type="text" class="form-control" placeholder="Ejemplo: Maria Cristina">
+                <label class="col-sm-6 col-form-label">Apellido Paterno</label> <br>
+                <input type="text" class="form-control" placeholder="Ejemplo: Solis">
+                <label class="col-sm-6 col-form-label">Apellido Materno</label> <br>
+                <input type="text" class="form-control" placeholder="Ejemplo: Laureano">
+            </div>
+            <div class="col-md-6">
+                <label class="col-sm-6 col-form-label">Fecha de Nacimiento</label> <br>
+                <input type="date" class="form-control">
+                <label class="col-sm-6 col-form-label">Sexo del docente:</label> <br>
+                <select class="form-select">
+                    <option>Masculino</option>
+                    <option>Femenino</option>
+                </select>
+                <label class="col-sm-6 col-form-label">Estado Civil:</label> <br>
+                <select class="form-select">
+                    <option>Soltero</option>
+                    <option>Casado</option>
+                    <option>Viudo</option>
+                    <option>Divorciado</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-3 form-group">
+            <h3>Informacion Laboral</h3>
+            <div class="col-md-6">
+                <label class="col-sm-6 col-form-label">Cargo:</label> <br>
+                <select class="form-select">
+                    <option>Profesor</option>
+                    <option>Director</option>
+                    <option>Secretario</option>
+                    <option>Tecnico Administrativo</option>
+                </select>
+                <label class="col-sm-6 col-form-label">Condicion Laboral:</label> <br>
+                <select class="form-select">
+                    <option>Contratado</option>
+                    <option>Nombrado</option>
+                </select>
+                <label class="col-sm-6 col-form-label">Jornada Laboral:</label> <br>
+                <select class="form-select">
+                    <option>COMPLETA</option>
+                    <option>PARCIAL</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="col-sm-6 col-form-label">Situacion Laboral:</label> <br>
+                <select class="form-select">
+                    <option>EN ACTIVIDAD</option>
+                    <option>ENCARGADO</option>
+                    <option>RETIRADO</option>
+                </select>
+                <label class="col-sm-6 col-form-label">Nivel Educativo:</label> <br>
+                <select class="form-select">
+                    <option>PRIMARIO</option>
+                    <option>SECUNDARIO</option>
+                    <option>SUPERIOR</option>
+                </select>
+                <label class="col-sm-6 col-form-label">Modalidad Educativa:</label> <br>
+                <select class="form-select">
+                    <option>PRESENCIAL</option>
+                    <option>VIRTUAL</option>
+                    <option>MIXTO</option>
+                    <option>ESPECIAL</option>
+                    <option>ADULTOS</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="d-grid gap-2">
+                <button class="btn btn-lg btn-success ">AÑADIR DOCENTE</button>
+            </div>
+        </div>
+    </div>
+<%- include('partials/_footer') %>

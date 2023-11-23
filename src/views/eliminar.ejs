@@ -1,0 +1,19 @@
+<%- include('partials/_header') %>
+<h1>Eliminar</h1>
+<div class="container">
+    <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="alert alert-dismissible alert-warning">
+                    <h4 class="alert-heading">ADVERTENCIA!</h4>
+                    <p class="mb-0">Eliminar docente normalmente no es una opcion posible en el sistema de escalafon, Al dar click al boton "Eliminar" se borrará toda la informacion relacionada con el docente.</p>
+                </div>
+            </div>
+            <div class="d-grid gap-2 text-center">
+                <form class="block"action="/delete/<%= id %>">
+                    <button class="btn btn-lg btn-danger" name="eliminar" >ELIMINAR</button>
+                </form>
+            </div>
+    </div>
+</div>
+
+<%- include('partials/_footer') %>

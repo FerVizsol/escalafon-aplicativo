@@ -1,0 +1,56 @@
+<%- include('partials/_header') %>
+<h1 class="mt-3 ms-3">LISTADO DE DOCENTES</h1>
+<div class="container">
+  <div class="row mt-5">
+    <h3 class="mt-3 ms-3">Busqueda</h3>
+    <div class="col-md-12">
+      <form class="d-flex" action="/busqueda">
+        <input class="form-control me-sm-2" type="search" placeholder="Apellidos/Nombres del Docente" name="busqueda" value = "<%- busqueda %>">
+        <button class="btn btn-primary my-2 my-sm-0" type="submit">Buscar</button>
+      </form>
+    </div>
+  </div>
+  <div class="row mt-5">
+      <div class="col-md-12">
+          <table class="table table-bordered table-hover">
+              <thead>
+                  <tr>
+                      <th class="bg-primary">N° Documento</th>
+                      <th class="bg-primary">Apellidos y Nombres</th>
+                      <th class="bg-primary">Centro Laboral</th>
+                      <th class="bg-primary">Condicion Laboral</th>
+                      <th class="bg-primary">Situacion Laboral</th>
+                      <th class="bg-primary">ACCION</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% if (data) { %>
+                  <% for (var i = 0; i < data[0].length; i++) { %>
+                    <tr>
+                      <td><%= data[0][i].numdoc %></td>
+                      <td><%= data[0][i].nom %></td>
+                      <td><%= data[0][i].cmodular %></td>
+                      <td><%= data[0][i].claboral %></td>
+                      <td>
+                        <%= data[0][i].slaboral %>
+                      </td>
+                      <td>
+                      <container>
+                        <a class="text-center badge bg-success" href="/nuevaresolucion/<%=data[0][i].numdoc %>">NUEVA RESOLUCION</a>
+                        <a class="text-center badge bg-warning" href="/editar/<%=data[0][i].numdoc %>">MODIFICAR</a>
+                        <a class="text-center badge bg-info" href="/legajo/<%=data[0][i].numdoc %>">VER LEGAJO</a>
+                        <a class="text-center badge bg-danger" href="/eliminar/<%=data[0][i].numdoc %>">ELIMINAR</a>
+                      </container>
+                      </td>
+                    </tr>
+                  <% } %>
+                <% } %>
+              </tbody>
+              
+              
+          </table>
+      </div>
+      
+  </div>
+</div>
+<%- include('partials/_footer') %>

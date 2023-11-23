@@ -1,0 +1,31 @@
+/* styles.css */
+.search-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .search-results {
+    display: none;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    background-color: #f1f1f1;
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ccc;
+    margin: 0;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  /* styles.css */
+.green-radio {
+  background-color: green;
+  border-color: green;
+}
+
+.red-radio {
+  background-color: red;
+  border-color: red;
+}
+
+  
