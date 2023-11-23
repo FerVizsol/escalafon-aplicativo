@@ -79,7 +79,12 @@ controller.eliminardocente = (req,res) => {
         id : id
     })
 }
-
+controller.nuevaresolucion = (req,res) => {
+    const {id} = req.params;
+    res.render('nuevaresolucion',{
+        id : id
+    })
+}
 controller.delete = (req,res) => {
     const {id} = req.params;
     console.log({id})
@@ -92,5 +97,13 @@ controller.delete = (req,res) => {
             }
         })
     })
+}
+
+controller.ingresarresolucion = (req,res) => {
+    const {id} = req.params;
+    req.getConnection((err,conn) =>{
+        conn.query("CALL crear_resolucion(?,?,?)")
+    })
+    res.render('resolucioncreada')
 }
 module.exports = controller;

@@ -11,4 +11,5 @@ router.get('/anadir', customerControllers.anadirdocente)
 router.get('/editar/:id', customerControllers.editardocente)
 router.get('/eliminar/:id', customerControllers.eliminardocente)
 router.get('/delete/:id', customerControllers.delete)
+router.get('/nuevaresolucion/:id', customerControllers.nuevaresolucion)
 module.exports = router;
