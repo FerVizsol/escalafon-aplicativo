@@ -1,82 +1,94 @@
 <%- include('partials/_header') %>
     <div class="container card mt-5">
-        <div class="row form-group mt-3">
-            <h3>Información Basica</h3>
-            <div class="col-md-6">
-                <label for="numdoc" class="col-sm-6 col-form-label">Numero de Documento</label> <br>
-                <input type="text" class="form-control" placeholder="Ejemplo: 72707075">
-                <label class="col-sm-6 col-form-label">Nombres del docente</label> <br>
-                <input type="text" class="form-control" placeholder="Ejemplo: Maria Cristina">
-                <label class="col-sm-6 col-form-label">Apellido Paterno</label> <br>
-                <input type="text" class="form-control" placeholder="Ejemplo: Solis">
-                <label class="col-sm-6 col-form-label">Apellido Materno</label> <br>
-                <input type="text" class="form-control" placeholder="Ejemplo: Laureano">
+        <form action="/anadir2/" method="post">
+            <div class="row form-group mt-3">
+                <h3>Información Basica</h3>
+                <div class="col-md-6">
+                    <label for="numdoc" class="col-sm-6 col-form-label">Numero de Documento</label> <br>
+                    <input class="form-control"type="text" id="numdoc" name="numdoc" pattern="[0-9]{1,9}" placeholder="Ejemplo: 72757520" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="9">
+                    <label class="col-sm-6 col-form-label">Nombres del docente</label> <br>
+                    <input type="text" class="form-control" placeholder="Ejemplo: Maria Cristina" name="nombre" required>
+                    <label class="col-sm-6 col-form-label">Apellido Paterno</label> <br>
+                    <input type="text" class="form-control" placeholder="Ejemplo: Solis" name="appat"required>
+                    <label class="col-sm-6 col-form-label">Apellido Materno</label> <br>
+                    <input type="text" class="form-control" placeholder="Ejemplo: Laureano" name="apmat"required>
+                </div>
+                <div class="col-md-6">
+                    <label class="col-sm-6 col-form-label">Fecha de Nacimiento</label> <br>
+                    <input type="date" class="form-control" name="fechanac" required>
+                    <label class="col-sm-6 col-form-label">Sexo del docente:</label> <br>
+                    <select class="form-select" name="sexo" required>
+                        <option>Masculino</option>
+                        <option>Femenino</option>
+                    </select>
+                    <label class="col-sm-6 col-form-label">Estado Civil:</label> <br>
+                    <select class="form-select" name="estado"required>
+                        <option>Soltero</option>
+                        <option>Casado</option>
+                        <option>Viudo</option>
+                        <option>Divorciado</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label class="col-sm-6 col-form-label">Fecha de Nacimiento</label> <br>
-                <input type="date" class="form-control">
-                <label class="col-sm-6 col-form-label">Sexo del docente:</label> <br>
-                <select class="form-select">
-                    <option>Masculino</option>
-                    <option>Femenino</option>
-                </select>
-                <label class="col-sm-6 col-form-label">Estado Civil:</label> <br>
-                <select class="form-select">
-                    <option>Soltero</option>
-                    <option>Casado</option>
-                    <option>Viudo</option>
-                    <option>Divorciado</option>
-                </select>
+            <div class="row mt-3 form-group">
+                <h3>Información Laboral</h3>
+                <div class="col-md-6">
+                    <label class="col-sm-6 col-form-label">Cargo:</label> <br>
+                    <select class="form-select" name="cargo" required>
+                        <option>Profesor</option>
+                        <option>Director</option>
+                        <option>Secretario</option>
+                        <option>Tecnico Administrativo</option>
+                    </select>
+                    <label class="col-sm-6 col-form-label">Condicion Laboral:</label> <br>
+                    <select class="form-select" name="claboral" required>
+                        <option>Contratado</option>
+                        <option>Nombrado</option>
+                    </select>
+                    <label class="col-sm-6 col-form-label">Jornada Laboral:</label> <br>
+                    <select class="form-select" name="jlaboral" required>
+                        <option>COMPLETA</option>
+                        <option>PARCIAL</option>
+                    </select>
+                    <label class="col-sm-6 col-form-label">Institucion donde labora:</label> <br>
+                    <select class="form-select" name="codmodular" required>
+                        
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="col-sm-6 col-form-label">Situacion Laboral:</label> <br>
+                    <select class="form-select" name="slaboral" required>
+                        <option>EN ACTIVIDAD</option>
+                        <option>ENCARGADO</option>
+                        <option>RETIRADO</option>
+                    </select>
+                    <label class="col-sm-6 col-form-label">Nivel Educativo:</label> <br>
+                    <select class="form-select" name="neducativo" required>
+                        <option>PRIMARIO</option>
+                        <option>SECUNDARIO</option>
+                        <option>SUPERIOR</option>
+                    </select>
+                    <label class="col-sm-6 col-form-label">Modalidad Educativa:</label> <br>
+                    <select class="form-select" name="meducativa" required>
+                        <option>PRESENCIAL</option>
+                        <option>VIRTUAL</option>
+                        <option>MIXTO</option>
+                        <option>ESPECIAL</option>
+                        <option>ADULTOS</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="row mt-3 form-group">
-            <h3>Información Laboral</h3>
-            <div class="col-md-6">
-                <label class="col-sm-6 col-form-label">Cargo:</label> <br>
-                <select class="form-select">
-                    <option>Profesor</option>
-                    <option>Director</option>
-                    <option>Secretario</option>
-                    <option>Tecnico Administrativo</option>
-                </select>
-                <label class="col-sm-6 col-form-label">Condicion Laboral:</label> <br>
-                <select class="form-select">
-                    <option>Contratado</option>
-                    <option>Nombrado</option>
-                </select>
-                <label class="col-sm-6 col-form-label">Jornada Laboral:</label> <br>
-                <select class="form-select">
-                    <option>COMPLETA</option>
-                    <option>PARCIAL</option>
-                </select>
+            <div class="row mt-3">
+                <div class="d-grid gap-2 text-center">
+                    <button class="btn btn-lg btn-success" type="submit" onclick="redirectToAnadir2()">CONTINUAR</button>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label class="col-sm-6 col-form-label">Situacion Laboral:</label> <br>
-                <select class="form-select">
-                    <option>EN ACTIVIDAD</option>
-                    <option>ENCARGADO</option>
-                    <option>RETIRADO</option>
-                </select>
-                <label class="col-sm-6 col-form-label">Nivel Educativo:</label> <br>
-                <select class="form-select">
-                    <option>PRIMARIO</option>
-                    <option>SECUNDARIO</option>
-                    <option>SUPERIOR</option>
-                </select>
-                <label class="col-sm-6 col-form-label">Modalidad Educativa:</label> <br>
-                <select class="form-select">
-                    <option>PRESENCIAL</option>
-                    <option>VIRTUAL</option>
-                    <option>MIXTO</option>
-                    <option>ESPECIAL</option>
-                    <option>ADULTOS</option>
-                </select>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="d-grid gap-2">
-                <button class="btn btn-lg btn-success ">AÑADIR DOCENTE</button>
-            </div>
-        </div>
+        </form>       
     </div>
+    <script>
+        function redirectToAnadir2() {
+            var numdocValue = document.getElementById('numdoc').value;
+            window.location.href = "/anadir2/" + numdocValue;
+        }
+    </script>
 <%- include('partials/_footer') %>

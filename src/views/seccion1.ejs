@@ -1,0 +1,79 @@
+<%- include('partials/_header') %>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-2">
+            <div class="list-group">
+                <a href="/legajo/<%= id %>" class="list-group-item list-group-item-action" data-query="1">Seccion I:   Identificacion</a>
+                <a href="/seccion2/<%= id %>" class="list-group-item list-group-item-action" data-query="2">Seccion II:  Situacion Academica</a>
+                <a href="/seccion3/<%= id %>" class="list-group-item list-group-item-action" data-query="3">Seccion III: Ingreso o Reingreso</a>
+                <a href="/seccion4/<%= id %>" class="list-group-item list-group-item-action" data-query="4">Seccion IV:  Trayectoria Laboral</a>
+                <a href="/seccion5/<%= id %>" class="list-group-item list-group-item-action" data-query="5">Seccion V:   Asignaciones e incentivos</a>
+                <a href="/seccion6/<%= id %>" class="list-group-item list-group-item-action" data-query="6">Seccion VI:  Retiro y Regimen pensionario</a>
+                <a href="/seccion7/<%= id %>" class="list-group-item list-group-item-action" data-query="7">Seccion VII: Premios y estimulos</a>
+                <a href="/seccion8/<%= id %>" class="list-group-item list-group-item-action" data-query="8">Seccion VIII: Sanciones</a>
+                <a href="/seccion9/<%= id %>" class="list-group-item list-group-item-action" data-query="9">Seccion IX:  Licencias y Vacaciones</a>
+                <a href="/seccion10/<%= id %>" class="list-group-item list-group-item-action" data-query="10">Seccion X:  Otros</a>
+            </div>
+        </div>
+        <div class="col-md-10 card">
+            <div id="info">
+                <h1>Seccion I:   Identificacion</h1>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="bg-primary">N° Resolución</th>
+                            <th class="bg-primary">Tipo</th>
+                            <th class="bg-primary">Estado</th>
+                            <th class="bg-primary">Régimen</th>
+                            <th class="bg-primary">Motivo</th>
+                            <th class="bg-primary">Acción</th>
+                            <th class="bg-primary">Ver mas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <% if (data[0].length != 0) { %>
+                        <% for (var i = 0; i < data[0].length; i++) { %>
+                          <tr>
+                            <td><%= data[0][i].numResolucion %></td>
+                            <td><%= data[0][i].tipo %></td>
+                            <td><%= data[0][i].estado %></td>
+                            <td><%= data[0][i].regimen %></td>
+                            <td><%= data[0][i].motivo %></td>
+                            <td><%= data[0][i].accion %></td>
+                            <td>
+                            <container>
+                              <a class="text-center badge bg-success" href="/descripcion/<%=data[0][i].numResolucion %>">VER MAS</a>
+                            </container>
+                            </td>
+                          </tr>
+                        <% } %>
+                      <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row mt-5 card">
+        <div class="col-md-12">
+            <h3 class="mt-2">Crear Reporte Escalafonario</h3>
+            <div class="form-group">
+                <select class="form-select">
+                    <option>Informe de Inhabilitacion</option>
+                    <option>Informe de Cese Permanente</option>
+                    <option>Informe de Cese Temporal</option>
+                    <option>Informe de Destitucion</option>
+                    <option>Informe de Vacaciones</option>
+                    <option>Informe de Retenciones Judiciales</option>
+                    <option>Informe de Reingreso a la Carrera Magisterial</option>
+                    <option>Informe de Otorgar Subsidio por luto</option>
+                    <option>Reporte Hoja de Vida</option>
+                </select>
+                <button class="btn btn-primary mt-2">CREAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<%- include('partials/_footer') %>

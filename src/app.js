@@ -26,13 +26,7 @@ app.use(myConnection(mysql,{
     port: 3306,
     database: 'escalafon'
 }, 'single'));
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'clavenueva',
-    port: 3306,
-    database: 'escalafon',
-  });
+
 //routes
 app.use('/',customerRoutes);
 /*
