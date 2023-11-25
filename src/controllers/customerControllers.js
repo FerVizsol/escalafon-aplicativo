@@ -326,13 +326,14 @@ controller.ingresarresolucion = (req,res) => {
                 const descripcionArray = descripciones.split(";");
                 for (let i = 0; i < descripcionArray.length; i++) {
                     const descripcion = descripcionArray[i];
-                    conn.query("CALL CrearDescripcion(?, ?)", [nuevaclave[0][0].clavenueva, descripcion], (err, result) => {
+                    conn.query("CALL CrearDescripcion(?, ?)", [nuevaclave[0][0].nuevaClave, descripcion], (err, result) => {
                         if (err) {
                             res.json(err);
                         }
+                        console.log(result);
                     });
-                    res.render('resolucioncreado')
                 }
+                res.render('resolucioncreado')
             }
         })
     })
