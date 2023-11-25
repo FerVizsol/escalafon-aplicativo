@@ -575,6 +575,12 @@ controller.seccion10 = (req,res) =>{
     })
 }
 
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const formattedDate = new Date(dateString).toLocaleDateString('es-PE', options);
+    return formattedDate;
+}
+
 controller.descripcion = (req,res) =>{
     const{numResolucion} = req.params;
     req.getConnection( (err,conn) => {
@@ -587,6 +593,8 @@ controller.descripcion = (req,res) =>{
                         res.json(err);
                     }else{
                         console.log(data1[0][0]);
+                        data1[0][0].fechaInicio = formatDate(data1[0][0].fechaInicio);
+                        data1[0][0].fechaFin = formatDate(data1[0][0].fechaFin);
                         res.render('descripcion',{
                             numResolucion,
                             data1,
@@ -837,4 +845,5 @@ controller.reporteescalafonario = (req,res) =>{
         })
     }
 }
+
 module.exports = controller;

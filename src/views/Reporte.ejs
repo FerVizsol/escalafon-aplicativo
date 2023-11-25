@@ -1,21 +1,21 @@
 <%- include('partials/_header') %>
 <% const secciones = {
-    1: "Seccion I: Identificacion",
-    2: "Seccion II: Situacion Academica",
+    1: "Seccion I: Identificación",
+    2: "Seccion II: Situación Académica",
     3: "Seccion III: Ingreso o Reingreso",
     4: "Seccion IV: Trayectoria Laboral",
     5: "Seccion V: Asignaciones e incentivos",
-    6: "Seccion VI: Retiro y Regimen pensionario",
-    7: "Seccion VII: Premios y Estimulos",
+    6: "Seccion VI: Retiro y Régimen pensionario",
+    7: "Seccion VII: Premios y Estímulos",
     8: "Seccion VIII: Sanciones",
     9: "Seccion IX: Licencias y Vacaciones",
     10: "Seccion X: Otros"
 };
   const informes ={
-    1: "Informe Escalafonario de Inhabilitacion",
+    1: "Informe Escalafonario de Inhabilitación",
     2: "Informe Escalafonario de Cese Permanente",
     3: "Informe Escalafonario de Cese Temporal",
-    4: "Informe Escalafonario de Destitucion",
+    4: "Informe Escalafonario de Destitución",
     5: "Informe Escalafonario de Vacaciones",
     6: "Informe Escalafonario de Retenciones Judiciales",
     7: "Informe Escalafonario de Reingreso a la Carrera Magisterial",
@@ -38,7 +38,7 @@
             <div class="col-md-6">
                 <h4>Estado:</h4>
                 <h5 class="text-body-secondary"><%= data[i].estado %></h5>
-                <h4>Regimen:</h4>
+                <h4>Régimen:</h4>
                 <h5 class="text-body-secondary"><%= data[i].regimen %></h5>
             </div>
         </div>
@@ -46,7 +46,7 @@
             <div class="col-md-12">
                 <h4>Motivo:</h4>
                 <h5 class="text-body-secondary"><%= data[i].motivo %></h5>
-                <h4>Accion:</h4>
+                <h4>Acción:</h4>
                 <h5 class="text-body-secondary"><%= data[i].accion %></h5>
             </div>
         </div>
