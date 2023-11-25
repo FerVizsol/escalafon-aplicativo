@@ -1,0 +1,30 @@
+<%- include('partials/_header') %>
+<h1>LISTADO LUGARES DE ESTUDIO</h1>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="bg-primary">Codigo</th>
+                        <th class="bg-primary">Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <% if (data) { %>
+                    <% for (var i = 0; i < data[0].length; i++) { %>
+                      <tr>
+                        <td><%= data[0][i].codLugarEstudio %></td>
+                        <td><%= data[0][i].descripcion %></td>
+                      </tr>
+                    <% } %>
+                  <% } %>
+                </tbody>
+                
+                
+            </table>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/_footer') %>

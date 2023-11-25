@@ -5,6 +5,7 @@ const controller = require('../controllers/customerControllers');
 
 
 router.get('/', customerControllers.inicio);
+router.get('/lugares',customerControllers.lugares);
 router.get('/busqueda', customerControllers.busqueda)
 router.get('/legajo/:id', customerControllers.verlegajo)
 router.get('/anadir', customerControllers.anadirdocente)
@@ -21,6 +22,11 @@ router.get('/seccion7/:id',customerControllers.seccion7)
 router.get('/seccion8/:id',customerControllers.seccion8)
 router.get('/seccion9/:id',customerControllers.seccion9)
 router.get('/seccion10/:id',customerControllers.seccion10)
-router.post('/anadir2/:id', customerControllers.anadirdocente2)
+router.post('/anadir2/:id', customerControllers.anadirdocente2);
+router.post('/anadir3/:id',customerControllers.anadirdocente3);
+router.post('/ingresarresolucion/:codPlaza',customerControllers.ingresarresolucion);
+router.get('/descripcion/:numResolucion', customerControllers.descripcion)
+router.post('/modificarDocente/:id',customerControllers.modificardocente)
+router.get('/reporteescalafonario/:id',customerControllers.reporteescalafonario)
 
 module.exports = router;

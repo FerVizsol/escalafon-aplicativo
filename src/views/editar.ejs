@@ -1,3 +1,42 @@
 <%- include('partials/_header') %>
-<h1>MODIFICAR</h1>
+<h1>MODIFICAR DOCENTE</h1>
+<div class="container card mt-5">
+    <form action="/modificarDocente/<%= id %>" method="post">
+        <div class="row form-group mt-3">
+            <h3>Informacion Modificable</h3>
+            <div class="col-md-6">
+                <label class="col-sm-6 col-form-label">Nuevos Nombres</label>
+                <input class="form-control" type="text" name="nuevosNombres" value="<%= data.nombres %>">
+                <label class="col-sm-6 col-form-label">Nuevo Apellido Paterno</label>
+                <input class="form-control" type="text" name="nuevosApPat" value="<%= data.apPat %>">
+                <label class="col-sm-6 col-form-label">Nuevo Apellido Materno</label>
+                <input class="form-control" type="text" name="nuevosApMat" value="<%= data.apMat %>">
+                <label class="col-sm-6 col-form-label">Nuevo Estado Civil</label>
+                <select class="form-select" name="nuevoEstadoCivil">
+                    <option value="S" <% if (data.estadoCivil === 'S') { %>selected<% } %>>Soltero</option>
+                    <option value="C" <% if (data.estadoCivil === 'C') { %>selected<% } %>>Casado</option>
+                    <option value="V" <% if (data.estadoCivil === 'V') { %>selected<% } %>>Viudo</option>
+                    <option value="D" <% if (data.estadoCivil === 'D') { %>selected<% } %>>Divorciado</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="col-sm-6 col-form-label">Nuevo Sexo</label>
+                <select class="form-select" name="nuevoSexo">
+                    <option value="M" <% if (data.sexo === 'M') { %>selected<% } %>>Masculino</option>
+                    <option value="F" <% if (data.sexo === 'F') { %>selected<% } %>>Femenino</option>
+                </select>
+                <label class="col-sm-6 col-form-label">Nueva Fecha de Nacimiento</label>
+                <input class="form-control" type="date" name="nuevaFechaNac" value="<%= fechaNac %>">
+                <label class="col-sm-6 col-form-label">Nueva Fecha de Fallecimiento</label>
+                <input class="form-control" type="date" name="nuevaFechaFalle" value="<%= fechaFalle %>">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="d-grid gap-2 text-center">
+                <button class="btn btn-lg btn-success" type="submit">MODIFICAR</button>
+            </div>
+        </div>
+    </form>
+</div>
 <%- include('partials/_footer') %>
+

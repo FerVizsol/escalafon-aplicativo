@@ -1,0 +1,46 @@
+<%- include('partials/_header') %>
+<% const secciones = {
+    1: "Seccion I: Identificacion",
+    2: "Seccion II: Situacion Academica",
+    3: "Seccion III: Ingreso o Reingreso",
+    4: "Seccion IV: Trayectoria Laboral",
+    5: "Seccion V: Asignaciones e incentivos",
+    6: "Seccion VI: Retiro y Regimen pensionario",
+    7: "Seccion VII: Premios y Estimulos",
+    8: "Seccion VIII: Sanciones",
+    9: "Seccion IX: Licencias y Vacaciones",
+    10: "Seccion X: Otros"
+}; %>
+<h1 class="mt-3">Descripcion de resolucion <%= numResolucion %></h1>
+<div class="container mt-5" style="border:solid;">
+    <div class="row mt-2" >
+        <div class="col-md-6">
+            <h2>Seccion:</h2>
+            <h5 class="text-body-secondary"><%= secciones[data1[0][0].numSeccion] %></h5>
+            <h2>Tipo:</h2>
+            <h5 class="text-body-secondary"><%= data1[0][0].tipo %></h5>
+        </div>
+        <div class="col-md-6">
+            <h2>Estado:</h2>
+            <h5 class="text-body-secondary"><%= data1[0][0].estado %></h5>
+            <h2>Regimen:</h2>
+            <h5 class="text-body-secondary"><%= data1[0][0].regimen %></h5>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <h2>Motivo:</h2>
+            <h5 class="text-body-secondary"><%= data1[0][0].motivo %></h5>
+            <h2>Accion:</h2>
+            <h5 class="text-body-secondary"><%= data1[0][0].accion %></h5>
+            <h2>Descripciones Adicionales:</h2>
+            <ul>
+                <% for (let i = 0; i < data2[0].length; i++) { %>
+                    <li><%= data2[0][i].descripcion %></li>
+                <% } %>
+            </ul>
+        </div>
+        
+    </div>
+</div>
+<%- include('partials/_footer') %>

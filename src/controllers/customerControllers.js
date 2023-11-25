@@ -1,6 +1,20 @@
 const controller = {};
 
 //selects
+controller.lugares = (req,res) =>{
+    req.getConnection( (err,conn) =>{
+        conn.query("CALL listar_lugarestudio()", (err,data) =>{
+            if (err){
+                res.json(err)
+            }else{
+                res.render('lugares',{
+                    data
+                })
+            }
+        })
+    })
+}
+
 controller.inicio = (req,res)=> {
     req.getConnection((err,conn) =>{
         conn.query("CALL listar_docentes()",(err,lista) =>{
@@ -100,14 +114,13 @@ controller.anadirdocente2 = (req,res) => {
         jlaboral,
         slaboral,
         neducativo,
-        meducativa
+        meducativa,
+        codmodular,
+        ubicacionfisica
     } = req.body;
-    if(sexo == "Masculino"){
-        sexo : "M"
-    }else{
-        sexo : "F"
-    }
-    estado : estado.substring(0,1);
+    
+    let sexo1 = sexo.substring(0,1)
+    let estado1 = estado.substring(0,1);
     console.log({numdoc,
         nombre,
         appat,
@@ -120,9 +133,18 @@ controller.anadirdocente2 = (req,res) => {
         jlaboral,
         slaboral,
         neducativo,
-        meducativa});
+        meducativa,
+        codmodular,
+        ubicacionfisica
+    });
+    const currentDate = new Date();
+
+    const mes = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const anio = currentDate.getFullYear();
+    const dia = currentDate.getDate().toString().padStart(2, '0');
+    const diaFormato = `${anio}-${mes}-${dia}`;
     req.getConnection( (err,conn) => {
-        conn.query("CALL CrearDocenteYLegajoPersonal(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",[numdoc, nombre, appat,apmat,"DNI",sexo,fechanac,"null",estado,cargo,claboral,neducativo, cargo + " " +neducativo, meducativa, "CURDATE()", slaboral, jlaboral,  ],(err,resultado) =>{
+        conn.query("CALL CrearDocenteYLegajoPersonal(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",[numdoc, nombre, appat,apmat,"DNI",sexo1,fechanac, null ,estado1,cargo,claboral,neducativo, cargo + " " +neducativo, meducativa, diaFormato , slaboral, jlaboral, codmodular, ubicacionfisica ],(err,resultado) =>{
             if (err){
                 res.json(err);
             }else{
@@ -132,22 +154,118 @@ controller.anadirdocente2 = (req,res) => {
                         controller.inicio();
                     }else{
                         res.render('anadir2',{
-                            id: id,
+                            id: numdoc,
                             idiomas: idiomas
                         })
                     }
                 })
             }
         })
-
-        
     })
 }
+controller.anadirdocente3 = (req, res) => {
+    const { id } = req.params;
+    const { codigoInstitucion, idiomas } = req.body;
+    const idiomasArray = idiomas.split(',');
+    const IdiomasArray = idiomasArray.map(item => item.split(' ')[0]);
+    const codigoInstitucionArray = codigoInstitucion.split(',');
+
+    const idiomaPromises = IdiomasArray.map(idioma => {
+        return new Promise((resolve, reject) => {
+            req.getConnection((err, conn) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    conn.query("CALL InsertarIdiomaDocente(?, ?)", [idioma, id], (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    const codigoInstitucionPromises = codigoInstitucionArray.map(codigoInstitucionItem => {
+        return new Promise((resolve, reject) => {
+            req.getConnection((err, conn) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    conn.query("CALL InsertarLugarEstudioDocente(?, ?)", [codigoInstitucionItem, id], (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    Promise.all([...idiomaPromises, ...codigoInstitucionPromises])
+        .then(() => {
+            res.render('docentecreado');
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+};
+
 
 controller.editardocente = (req,res) => {
     const {id} = req.params;
-    res.render('editar',{
+    req.getConnection((err,conn) =>{
+        conn.query("CALL info_editar_docente(?)",id,(err,data) =>{
 
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+                const day = date.getDate().toString().padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            
+            fechaNac = formatDate(data[0][0].fechaNac);
+            fechaFalle = data[0].fechaFalle ? formatDate(data[0][0].fechaFalle) : '';
+            res.render('editar',{
+                id,
+                data: data[0][0],
+                fechaNac,
+                fechaFalle
+            })
+        })
+    })
+    
+}
+controller.modificardocente = (req,res) =>{
+    const{id} = req.params;
+    const {
+        nuevosNombres,
+        nuevosApPat,
+        nuevosApMat,
+        nuevoEstadoCivil,
+        nuevoSexo,
+        nuevaFechaNac,
+        nuevaFechaFalle,
+    } = req.body;
+    let NuevaFechaFalle = nuevaFechaFalle;
+    if (nuevaFechaFalle == ''){
+        NuevaFechaFalle = null;
+    }
+    console.log(id,nuevosNombres,nuevosApPat,nuevosApMat,'DNI',nuevoSexo,nuevaFechaNac,NuevaFechaFalle,nuevoEstadoCivil);
+    req.getConnection( (err,conn) =>{
+        conn.query("CALL ActualizarDocente(?,?,?,?,?,?,?,?,?)",[id,nuevosNombres,nuevosApPat,nuevosApMat,'DNI',nuevoSexo,nuevaFechaNac,NuevaFechaFalle,nuevoEstadoCivil], (err,result) =>{
+            if (err){
+                res.json(err)
+            }else{
+                console.log(result);
+                res.render('editado')
+            }
+        })
     })
 }
 controller.eliminardocente = (req,res) => {
@@ -158,9 +276,18 @@ controller.eliminardocente = (req,res) => {
 }
 controller.nuevaresolucion = (req,res) => {
     const {id} = req.params;
-    res.render('nuevaresolucion',{
-        id : id
+    req.getConnection( (err,conn) =>{
+        conn.query("CALL Obtener_CodPlaza(?)",[id],(err,cod) =>{
+            if(err){
+                res.json(err)
+            }else{
+                res.render('nuevaresolucion',{
+                    codPlaza : cod[0][0].codPlaza
+                })
+            }
+        })
     })
+    
 }
 controller.delete = (req,res) => {
     const {id} = req.params;
@@ -177,11 +304,39 @@ controller.delete = (req,res) => {
 }
 
 controller.ingresarresolucion = (req,res) => {
-    const {id} = req.params;
+    const {codPlaza} = req.params;
+    const{
+        seccion,
+        tresolucion,
+        fechainicio,
+        eresolucion,
+        regimen,
+        fechafin,
+        motivo,
+        accion,
+        descripciones
+    } = req.body;
+    const fechaInicio = fechainicio ? fechainicio : null;
+    const fechaFin = fechafin ? fechafin : null;
     req.getConnection((err,conn) =>{
-        conn.query("CALL crear_resolucion(?,?,?)")
+        conn.query("CALL CrearResolucion(?,?,?,?,?,?,?,?,?)",[codPlaza,seccion,tresolucion,eresolucion,regimen,motivo,accion,fechaInicio,fechaFin],(err,nuevaclave) =>{
+            if (err){
+                res.json(err);
+            }else{
+                const descripcionArray = descripciones.split(";");
+                for (let i = 0; i < descripcionArray.length; i++) {
+                    const descripcion = descripcionArray[i];
+                    conn.query("CALL CrearDescripcion(?, ?)", [nuevaclave[0][0].clavenueva, descripcion], (err, result) => {
+                        if (err) {
+                            res.json(err);
+                        }
+                    });
+                    res.render('resolucioncreado')
+                }
+            }
+        })
     })
-    res.render('resolucioncreada')
+
 }
 
 controller.seccion2 = (req,res) =>{
@@ -417,5 +572,268 @@ controller.seccion10 = (req,res) =>{
             }
         })
     })
+}
+
+controller.descripcion = (req,res) =>{
+    const{numResolucion} = req.params;
+    req.getConnection( (err,conn) => {
+        conn.query("CALL MostrarResolucionCompleta(?)",[numResolucion],(err,data1) =>{
+            if (err){
+                res.json(err);
+            }else{
+                conn.query("CALL MostrarDescripciones(?)",[numResolucion],(err,data2) =>{
+                    if (err){
+                        res.json(err);
+                    }else{
+                        console.log(data1[0][0]);
+                        res.render('descripcion',{
+                            numResolucion,
+                            data1,
+                            data2
+                        })
+                    }
+                })
+            }
+        })
+    })
+    
+}
+controller.reporteescalafonario = (req,res) =>{
+    const id = req.params.id;
+    const reporteopcion = req.query.reporte;
+    if(reporteopcion == '1'){
+        req.getConnection( (err,conn) =>{
+            conn.query("CALL Obtener_CodPlaza(?)",[id],(err,codPlaza) =>{
+                if(err){
+                    res.json(err)
+                }else{
+                    conn.query("CALL informeInhabilitacion(?)",[codPlaza[0][0].codPlaza],(err,data) =>{
+                        if (err){
+                            res.json(err);
+                        }else{
+                            if (data[0].length == 0){
+                                console.log(data[0]);
+                                res.render('noReporte')
+                            }else{
+                                console.log(data[0]);
+                                res.render('Reporte',{
+                                    reporteopcion,
+                                    data : data[0]
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    }
+    if(reporteopcion == '2'){
+        req.getConnection( (err,conn) =>{
+            conn.query("CALL Obtener_CodPlaza(?)",[id],(err,codPlaza) =>{
+                if(err){
+                    res.json(err)
+                }else{
+                    conn.query("CALL informeCesePermanente(?)",[codPlaza[0][0].codPlaza],(err,data) =>{
+                        if (err){
+                            res.json(err);
+                        }else{
+                            if (data[0].length == 0){
+                                console.log(data[0]);
+                                res.render('noReporte')
+                            }else{
+                                console.log(data[0]);
+                                res.render('Reporte',{
+                                    reporteopcion,
+                                    data : data[0]
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    }
+    if(reporteopcion == '3'){
+        req.getConnection( (err,conn) =>{
+            conn.query("CALL Obtener_CodPlaza(?)",[id],(err,codPlaza) =>{
+                if(err){
+                    res.json(err)
+                }else{
+                    conn.query("CALL informeCeseTemporal(?)",[codPlaza[0][0].codPlaza],(err,data) =>{
+                        if (err){
+                            res.json(err);
+                        }else{
+                            if (data[0].length == 0){
+                                console.log(data[0]);
+                                res.render('noReporte')
+                            }else{
+                                console.log(data[0]);
+                                res.render('Reporte',{
+                                    reporteopcion,
+                                    data : data[0]
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    }
+    if(reporteopcion == '4'){
+        req.getConnection( (err,conn) =>{
+            conn.query("CALL Obtener_CodPlaza(?)",[id],(err,codPlaza) =>{
+                if(err){
+                    res.json(err)
+                }else{
+                    conn.query("CALL informeDestitucion(?)",[codPlaza[0][0].codPlaza],(err,data) =>{
+                        if (err){
+                            res.json(err);
+                        }else{
+                            if (data[0].length == 0){
+                                console.log(data[0]);
+                                res.render('noReporte')
+                            }else{
+                                console.log(data[0]);
+                                res.render('Reporte',{
+                                    reporteopcion,
+                                    data : data[0]
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    }
+    if(reporteopcion == '5'){
+        req.getConnection( (err,conn) =>{
+            conn.query("CALL Obtener_CodPlaza(?)",[id],(err,codPlaza) =>{
+                if(err){
+                    res.json(err)
+                }else{
+                    conn.query("CALL informeVacaciones(?)",[codPlaza[0][0].codPlaza],(err,data) =>{
+                        if (err){
+                            res.json(err);
+                        }else{
+                            if (data[0].length == 0){
+                                console.log(data[0]);
+                                res.render('noReporte')
+                            }else{
+                                console.log(data[0]);
+                                res.render('Reporte',{
+                                    reporteopcion,
+                                    data : data[0]
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    }
+    if(reporteopcion == '6'){
+        req.getConnection( (err,conn) =>{
+            conn.query("CALL Obtener_CodPlaza(?)",[id],(err,codPlaza) =>{
+                if(err){
+                    res.json(err)
+                }else{
+                    conn.query("CALL informeRetencionesJudiciales(?)",[codPlaza[0][0].codPlaza],(err,data) =>{
+                        if (err){
+                            res.json(err);
+                        }else{
+                            if (data[0].length == 0){
+                                console.log(data[0]);
+                                res.render('noReporte')
+                            }else{
+                                console.log(data[0]);
+                                res.render('Reporte',{
+                                    reporteopcion,
+                                    data : data[0]
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    }
+    if(reporteopcion == '7'){
+        req.getConnection( (err,conn) =>{
+            conn.query("CALL Obtener_CodPlaza(?)",[id],(err,codPlaza) =>{
+                if(err){
+                    res.json(err)
+                }else{
+                    conn.query("CALL informeReingresoCarreraMagisterial(?)",[codPlaza[0][0].codPlaza],(err,data) =>{
+                        if (err){
+                            res.json(err);
+                        }else{
+                            if (data[0].length == 0){
+                                console.log(data[0]);
+                                res.render('noReporte')
+                            }else{
+                                console.log(data[0]);
+                                res.render('Reporte',{
+                                    reporteopcion,
+                                    data : data[0]
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    }
+    if(reporteopcion == '8'){
+        req.getConnection( (err,conn) =>{
+            conn.query("CALL Obtener_CodPlaza(?)",[id],(err,codPlaza) =>{
+                if(err){
+                    res.json(err)
+                }else{
+                    conn.query("CALL informeSubsidioLuto(?)",[codPlaza[0][0].codPlaza],(err,data) =>{
+                        if (err){
+                            res.json(err);
+                        }else{
+                            if (data[0].length == 0){
+                                console.log(data[0]);
+                                res.render('noReporte')
+                            }else{
+                                console.log(data[0]);
+                                res.render('Reporte',{
+                                    reporteopcion,
+                                    data : data[0]
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    }
+    if(reporteopcion == '9'){
+        req.getConnection( (err,conn) =>{
+            conn.query("CALL Obtener_CodPlaza(?)",[id],(err,codPlaza) =>{
+                if(err){
+                    res.json(err)
+                }else{
+                    conn.query("CALL reporteHojaVida(?)",[codPlaza[0][0].codPlaza],(err,data) =>{
+                        if (err){
+                            res.json(err);
+                        }else{
+                            if (data[0].length == 0){
+                                console.log(data[0]);
+                                res.render('noReporte')
+                            }else{
+                                console.log(data[0]);
+                                res.render('Reporte',{
+                                    reporteopcion,
+                                    data : data[0]
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    }
 }
 module.exports = controller;

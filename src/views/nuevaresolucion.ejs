@@ -1,61 +1,66 @@
 <%- include('partials/_header') %>
 <h1>INGRESO DE NUEVA RESOLUCION AL LEGAJO</h1>
 <div class="container card mt-5">
-    <div class="row form-group mt-3">
-        <div class="col-md-6">
-            <label class="col-sm-6 col-form-label">Seccion de la resolucion:</label>
-            <select class="form-select">
-                <option>Seccion I:    Identificacion</option>
-                <option>Seccion II:   Situacion Academica</option>
-                <option>Seccion III:  Ingreso o Reingreso</option>
-                <option>Seccion IV:   Trayectoria Laboral</option>
-                <option>Seccion V:    Asignaciones e incentivos</option>
-                <option>Seccion VI:   Retiro y Regimen pensionario</option>
-                <option>Seccion VII:  Premios y Estimulos</option>
-                <option>Seccion VIII: Sanciones</option>
-                <option>Seccion IX:   Licencias y Vacaciones</option>
-                <option>Seccion X:    Otros</option>
-            </select>
-            <label class="col-sm-6 col-form-label">Tipo de Resolucion</label>
-            <select class="form-select">
-                <option>Administrativa</option>
-                <option>Ministerial</option>
-                <option>Judicial</option>
-            </select>
-            <label class="col-sm-6 col-form-label">Fecha Inicio:</label>
-            <input class="form-select" type="date">
+    <form action="/ingresarresolucion/<%= codPlaza%>" method="post">
+        <div class="row form-group mt-3">
+            <div class="col-md-6">
+                <label class="col-sm-6 col-form-label">Seccion de la resolucion:</label>
+                <select class="form-select" name="seccion">
+                    <option value="1">Seccion I:    Identificacion</option>
+                    <option value="2">Seccion II:   Situacion Academica</option>
+                    <option value="3">Seccion III:  Ingreso o Reingreso</option>
+                    <option value="4">Seccion IV:   Trayectoria Laboral</option>
+                    <option value="5">Seccion V:    Asignaciones e incentivos</option>
+                    <option value="6">Seccion VI:   Retiro y Regimen pensionario</option>
+                    <option value="7">Seccion VII:  Premios y Estimulos</option>
+                    <option value="8">Seccion VIII: Sanciones</option>
+                    <option value="9">Seccion IX:   Licencias y Vacaciones</option>
+                    <option value="10">Seccion X:    Otros</option>
+                </select>
+                <label class="col-sm-6 col-form-label">Tipo de Resolucion</label>
+                <select class="form-select" name="tresolucion">
+                    <option>Administrativa</option>
+                    <option>Ministerial</option>
+                    <option>Judicial</option>
+                </select>
+                <label class="col-sm-6 col-form-label">Fecha Inicio:</label>
+                <input class="form-select" type="date" name="fechainicio">
+            </div>
+            <div class="col-md-6">
+                <label class="col-sm-6 col-form-label">Estado de la Resolucion:</label>
+                <select class="form-select" name="eresolucion">
+                    <option>Aprobado</option>
+                    <option>Pendiente</option>
+                    <option>Denegado</option>
+                </select>
+                <label class="col-sm-6 col-form-label">Regimen:</label>
+                <select class="form-select" name="regimen">
+                    <option>Ley 29944</option>
+                    <option>Ley 26644</option>
+                    <option>Ley 30036</option>
+                    <option>Ley 27444</option>
+                    <option>Ley 12200</option>
+                </select>
+                <label class="col-sm-6 col-form-label">Fecha Fin:</label>
+                <input class="form-select" type="date" name="fechafin">
+            </div>
         </div>
-        <div class="col-md-6">
-            <label class="col-sm-6 col-form-label">Estado de la Resolucion:</label>
-            <select class="form-select">
-                <option>Aprobado</option>
-                <option>Pendiente</option>
-                <option>Denegado</option>
-            </select>
-            <label class="col-sm-6 col-form-label">Regimen:</label>
-            <select class="form-select">
-                <option>Ley 29944</option>
-                <option>Ley 26644</option>
-                <option>Ley 30036</option>
-                <option>Ley 27444</option>
-                <option>Ley 12200</option>
-            </select>
-            <label class="col-sm-6 col-form-label">Fecha Fin:</label>
-            <input class="form-select" type="date">
+        <div class="row form-group mt-3">
+            <div class="col-md-12">
+                <label class="col-sm-6 col-form-label">Motivo:</label>
+                <input type="text" class="form-control" placeholder="Ejemplo: Vacaciones" maxlength="25" name="motivo">
+                <label class="col-sm-6 col-form-label">Accion:</label>
+                <input type="text" class="form-control" placeholder="Ejemplo: Licencia" maxlength="40" name="accion">
+                <label class="col-sm-6 col-form-label">Descripciones Adicionales (Separar con ' <b>;</b> ')</label><br>
+                <input type="text" class="form-control form-control-lg" name="descripciones">
+            </div>
         </div>
-    </div>
-    <div class="row form-group mt-3">
-        <div class="col-md-12">
-            <label class="col-sm-6 col-form-label">Motivo:</label>
-            <input type="text" class="form-control" placeholder="Ejemplo: Vacaciones">
-            <label class="col-sm-6 col-form-label">Descripciones Adicionales</label><br>
-            <input type="text" class="form-control form-control-lg">
+        <div class="row mt-3">
+            <div class="d-grid gap-2">
+                <button class="btn btn-lg btn-success" type="submit">AÑADIR RESOLUCION AL DOCENTE</button>
+            </div>
         </div>
-    </div>
-    <div class="row mt-3">
-        <div class="d-grid gap-2">
-            <button class="btn btn-lg btn-success ">AÑADIR RESOLUCION AL DOCENTE</button>
-        </div>
-    </div>
+    </form>
+    
 </div>
 <%- include('partials/_footer') %>

@@ -50,6 +50,10 @@
                       <% } %>
                     </tbody>
                 </table>
+                <% if (data[0].length == 0) { %>
+                    <h4 class="text-body-secondary text-center">No hay registros</h4>
+                <% } %>
+                
             </div>
         </div>
     </div>
@@ -58,20 +62,23 @@
     <div class="row mt-5 card">
         <div class="col-md-12">
             <h3 class="mt-2">Crear Reporte Escalafonario</h3>
-            <div class="form-group">
-                <select class="form-select">
-                    <option>Informe de Inhabilitacion</option>
-                    <option>Informe de Cese Permanente</option>
-                    <option>Informe de Cese Temporal</option>
-                    <option>Informe de Destitucion</option>
-                    <option>Informe de Vacaciones</option>
-                    <option>Informe de Retenciones Judiciales</option>
-                    <option>Informe de Reingreso a la Carrera Magisterial</option>
-                    <option>Informe de Otorgar Subsidio por luto</option>
-                    <option>Reporte Hoja de Vida</option>
-                </select>
-                <button class="btn btn-primary mt-2">CREAR</button>
-            </div>
+            <form action="/reporteescalafonario/<%= id %>" method="get">
+                <div class="form-group">
+                    <select class="form-select" name="reporte">
+                        <option value="1">Informe de Inhabilitacion</option>
+                        <option value="2">Informe de Cese Permanente</option>
+                        <option value="3">Informe de Cese Temporal</option>
+                        <option value="4">Informe de Destitucion</option>
+                        <option value="5">Informe de Vacaciones</option>
+                        <option value="6">Informe de Retenciones Judiciales</option>
+                        <option value="7">Informe de Reingreso a la Carrera Magisterial</option>
+                        <option value="8">Informe de Otorgar Subsidio por luto</option>
+                        <option value="9">Reporte Hoja de Vida</option>
+                    </select>
+                    <button class="btn btn-primary mt-2" type="submit">CREAR</button>
+                </div>
+            </form>
+            
         </div>
     </div>
 </div>
