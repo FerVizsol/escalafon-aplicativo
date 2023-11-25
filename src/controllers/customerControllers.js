@@ -144,7 +144,7 @@ controller.anadirdocente2 = (req,res) => {
     const dia = currentDate.getDate().toString().padStart(2, '0');
     const diaFormato = `${anio}-${mes}-${dia}`;
     req.getConnection( (err,conn) => {
-        conn.query("CALL CrearDocenteYLegajoPersonal(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",[numdoc, nombre, appat,apmat,"DNI",sexo1,fechanac, null ,estado1,cargo,claboral,neducativo, cargo + " " +neducativo, meducativa, diaFormato , slaboral, jlaboral, codmodular, ubicacionfisica ],(err,resultado) =>{
+        conn.query("CALL CrearDocenteYLegajoPersonal(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",[numdoc, nombre, appat,apmat,sexo1,fechanac, null ,estado1,cargo,claboral,neducativo, cargo + " " +neducativo, meducativa, diaFormato , slaboral, jlaboral, codmodular, ubicacionfisica ],(err,resultado) =>{
             if (err){
                 res.json(err);
             }else{
