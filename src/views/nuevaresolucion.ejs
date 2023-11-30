@@ -1,11 +1,11 @@
 <%- include('partials/_header') %>
 <h1>INGRESO DE NUEVA RESOLUCIÓN AL LEGAJO</h1>
 <div class="container card mt-5">
-    <form action="/ingresarresolucion/<%= codPlaza%>" method="post">
+    <form action="/ingresarresolucion/<%= codPlaza%>" method="post" onsubmit="return validarFechas()">
         <div class="row form-group mt-3">
             <div class="col-md-6">
                 <label class="col-sm-6 col-form-label">Sección de la resolución:</label>
-                <select class="form-select" name="seccion">
+                <select class="form-select" name="seccion" required>
                     <option value="1">Seccion I:    Identificación</option>
                     <option value="2">Seccion II:   Situación Académica</option>
                     <option value="3">Seccion III:  Ingreso o Reingreso</option>
@@ -18,23 +18,23 @@
                     <option value="10">Seccion X:    Otros</option>
                 </select>
                 <label class="col-sm-6 col-form-label">Tipo de Resolución</label>
-                <select class="form-select" name="tresolucion">
+                <select class="form-select" name="tresolucion" required>
                     <option>Administrativa</option>
                     <option>Ministerial</option>
                     <option>Judicial</option>
                 </select>
                 <label class="col-sm-6 col-form-label">Fecha Inicio:</label>
-                <input class="form-select" type="date" name="fechainicio">
+                <input class="form-select" type="date" name="fechainicio" required>
             </div>
             <div class="col-md-6">
                 <label class="col-sm-6 col-form-label">Estado de la Resolución:</label>
-                <select class="form-select" name="eresolucion">
+                <select class="form-select" name="eresolucion" required>
                     <option>Aprobado</option>
                     <option>Pendiente</option>
                     <option>Denegado</option>
                 </select>
                 <label class="col-sm-6 col-form-label">Régimen:</label>
-                <select class="form-select" name="regimen">
+                <select class="form-select" name="regimen" required>
                     <option>Ley 29944</option>
                     <option>Ley 26644</option>
                     <option>Ley 30036</option>
@@ -48,9 +48,9 @@
         <div class="row form-group mt-3">
             <div class="col-md-12">
                 <label class="col-sm-6 col-form-label">Motivo:</label>
-                <input type="text" class="form-control" placeholder="Ejemplo: Vacaciones" maxlength="25" name="motivo">
+                <input type="text" class="form-control" placeholder="Ejemplo: Vacaciones" maxlength="25" name="motivo" required>
                 <label class="col-sm-6 col-form-label">Acción:</label>
-                <input type="text" class="form-control" placeholder="Ejemplo: Licencia" maxlength="40" name="accion">
+                <input type="text" class="form-control" placeholder="Ejemplo: Licencia" maxlength="40" name="accion" required>
                 <label class="col-sm-6 col-form-label">Descripciones Adicionales (Separar con ' <b>;</b> ')</label><br>
                 <input type="text" class="form-control form-control-lg" name="descripciones">
             </div>
@@ -61,6 +61,18 @@
             </div>
         </div>
     </form>
-    
+    <script>
+        function validarFechas() {
+            var fechaInicio = new Date(document.getElementsByName('fechainicio')[0].value);
+            var fechaFin = new Date(document.getElementsByName('fechafin')[0].value);
+
+            if (document.getElementsByName('fechafin')[0].value !== '' && fechaFin <= fechaInicio) {
+                alert('La fecha de fin debe ser posterior a la fecha de inicio.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </div>
 <%- include('partials/_footer') %>

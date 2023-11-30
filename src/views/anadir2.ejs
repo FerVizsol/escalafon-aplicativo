@@ -2,7 +2,7 @@
 <h1>INGRESO IDIOMAS Y LUGAR ESTUDIO</h1>
 
 <div class="container">
-    <form action="/anadir3/<%= id %>" method="post">
+    <form id="myForm" action="/anadir3/<%= id %>" method="post">
         <div class="row mt-5">
             <div class="col-md-6">
                 <label class="col-sm-6 col-form-label">Idiomas</label>
@@ -21,28 +21,29 @@
                 <% } %>
             </div>
             
-            
             <div class="col-md-6">
                 <label class="col-sm-6 col-form-label">Lugares de Estudio (separado en comas, 7 dígitos por código)</label>
                 <input class="form-control" type="text" pattern="^\d{7}(,\d{1,7})*$" placeholder="Codigo de Institucion" name="codigoInstitucion" required oninput="this.value = this.value.replace(/[^\d,]/g, '');"><br>
                 <a class="text-center badge bg-success" href="/lugares" target="_blank" rel="noopener noreferrer">LISTADO LUGARES DE ESTUDIO</a>
-
             </div>
         </div>
         <div class="row mt-3">
             <div class="d-grid gap-2 text-center">
-                <button class="btn btn-lg btn-success" type="button" onclick="redirectToAnadir3()">CONTINUAR</button>
+                <button class="btn btn-lg btn-success" type="button" onclick="validateAndSubmitForm()">CONTINUAR</button>
             </div>
         </div>
     </form>
     <script>
-        function redirectToAnadir3() {
-            var idiomasArray = Array.from(document.querySelectorAll('#idiomas-checkboxes input:checked')).map(checkbox => checkbox.value);
-            document.getElementById('idiomas-hidden').value = idiomasArray.join(',');
-            document.forms[0].submit();
+        function validateAndSubmitForm() {
+            if (document.getElementById('myForm').checkValidity()) {
+                var idiomasArray = Array.from(document.querySelectorAll('#idiomas-checkboxes input:checked')).map(checkbox => checkbox.value);
+                document.getElementById('idiomas-hidden').value = idiomasArray.join(',');
+                document.forms['myForm'].submit();
+            } else {
+                alert('Por favor, completa todos los campos requeridos.');
+            }
         }
     </script>
-    
 </div>
 
 <%- include('partials/_footer') %>

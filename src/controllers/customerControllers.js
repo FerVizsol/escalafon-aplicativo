@@ -148,6 +148,7 @@ controller.anadirdocente2 = (req,res) => {
             if (err){
                 res.json(err);
             }else{
+                console.log(resultado);
                 conn.query("CALL listar_idiomas()",(err,idiomas) =>{
                     if (err){
                         res.json(err);

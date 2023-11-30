@@ -5,7 +5,7 @@
                 <h3>Información Basica</h3>
                 <div class="col-md-6">
                     <label for="numdoc" class="col-sm-6 col-form-label">Número de Documento</label> <br>
-                    <input class="form-control"type="text" id="numdoc" name="numdoc" pattern="[0-9]{1,9}" placeholder="Ejemplo: 72757520" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="8">
+                    <input class="form-control"type="text" id="numdoc" name="numdoc" pattern="[0-9]{8}" placeholder="Ejemplo: 72757520" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="8">
                     <label class="col-sm-6 col-form-label">Nombres del docente</label> <br>
                     <input type="text" class="form-control" placeholder="Ejemplo: María Cristina" name="nombre" required>
                     <label class="col-sm-6 col-form-label">Apellido Paterno</label> <br>
@@ -51,7 +51,7 @@
                         <option>PARCIAL</option>
                     </select>
                     <label class="col-sm-6 col-form-label">Institución donde labora:</label> <br>
-                    <input class="form-control"type="text" id="numdoc" name="codmodular" pattern="[0-9]{1,9}" placeholder="Codigo Modular" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="7">
+                    <input class="form-control" type="text" id="numdoc" name="codmodular" pattern="[0-9]{7}" placeholder="Codigo Modular (7 dígitos)" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="7">
                 </div>
                 <div class="col-md-6">
                     <label class="col-sm-6 col-form-label">Situación Laboral:</label> <br>
@@ -85,11 +85,6 @@
             </div>
         </form>       
     </div>
-    <script>
-        function redirectToAnadir2() {
-            var numdocValue = document.getElementById('numdoc').value;
-            window.location.href = "/anadir2/" + numdocValue;
-        }
-    </script>
+    
     
 <%- include('partials/_footer') %>

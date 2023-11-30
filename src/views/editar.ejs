@@ -6,11 +6,11 @@
             <h3>Información Modificable</h3>
             <div class="col-md-6">
                 <label class="col-sm-6 col-form-label">Nuevos Nombres</label>
-                <input class="form-control" type="text" name="nuevosNombres" value="<%= data.nombres %>">
+                <input class="form-control" type="text" name="nuevosNombres" value="<%= data.nombres %>" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '').toUpperCase();">
                 <label class="col-sm-6 col-form-label">Nuevo Apellido Paterno</label>
-                <input class="form-control" type="text" name="nuevosApPat" value="<%= data.apPat %>">
+                <input class="form-control" type="text" name="nuevosApPat" value="<%= data.apPat %>" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '').toUpperCase();">
                 <label class="col-sm-6 col-form-label">Nuevo Apellido Materno</label>
-                <input class="form-control" type="text" name="nuevosApMat" value="<%= data.apMat %>">
+                <input class="form-control" type="text" name="nuevosApMat" value="<%= data.apMat %>" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '').toUpperCase();">
                 <label class="col-sm-6 col-form-label">Nuevo Estado Civil</label>
                 <select class="form-select" name="nuevoEstadoCivil">
                     <option value="S" <% if (data.estadoCivil === 'S') { %>selected<% } %>>Soltero</option>
